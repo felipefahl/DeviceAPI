@@ -1,0 +1,26 @@
+version: "3.4"
+
+services:
+    api:
+        build:
+          context: .
+          dockerfile: ./src/DeviceAPI/Dockerfile
+        ports:
+          - "32033:80"
+        depends_on:
+          - db
+
+    db:
+        image: "mcr.microsoft.com/mssql/server:2022-latest"
+        hostname: 'db'
+        ports:
+          - "1433:1433"
+        expose:
+         - 1433        
+        volumes:
+          - my-db:/var/lib/mssqlql/data
+        environment:
+            SA_PASSWORD: "S3cur3P@ssW0rd!"
+            ACCEPT_EULA: "Y"
+volumes:
+    my-db: {}
