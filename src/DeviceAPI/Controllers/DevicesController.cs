@@ -1,6 +1,8 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
 using DeviceAPI.Dtos;
+using DeviceAPI.Validations;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeviceAPI.Controllers
@@ -46,6 +48,14 @@ namespace DeviceAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddDevice([FromBody] DeviceDto device)
         {
+
+            var errors = GetValidationRequestErrors<DeviceDtoValidation, DeviceDto>(device);
+
+            if (errors.Any())
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, GetUnprocessableEntityResponse(HttpContext, errors));
+            }
+
             var result = await _deviceService.AddAsync(device.Name, device.Brand);
             return Ok(result);
         }
@@ -53,6 +63,13 @@ namespace DeviceAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDevice([FromRoute] Guid id, [FromBody] DeviceDto device)
         {
+            var errors = GetValidationRequestErrors<DeviceDtoValidation, DeviceDto>(device);
+
+            if (errors.Any())
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, GetUnprocessableEntityResponse(HttpContext, errors));
+            }
+
             var result = await _deviceService.UpdateAsync(id, device.Name, device.Brand);
 
             if (result == null)
@@ -66,6 +83,13 @@ namespace DeviceAPI.Controllers
         [HttpPatch("{id}/name")]
         public async Task<IActionResult> UpdateDeviceName([FromRoute] Guid id, [FromBody] DeviceNameDto deviceName)
         {
+            var errors = GetValidationRequestErrors<DeviceNameDtoValidation, DeviceNameDto>(deviceName);
+
+            if (errors.Any())
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, GetUnprocessableEntityResponse(HttpContext, errors));
+            }
+
             var result = await _deviceService.UpdateNameAsync(id, deviceName.Name);
 
             if (result == null)
@@ -77,8 +101,15 @@ namespace DeviceAPI.Controllers
         }
 
         [HttpPatch("{id}/brand")]
-        public async Task<IActionResult> UpdateDeviceName([FromRoute] Guid id, [FromBody] DeviceBrandDto deviceBrand)
+        public async Task<IActionResult> UpdateDeviceBrand([FromRoute] Guid id, [FromBody] DeviceBrandDto deviceBrand)
         {
+            var errors = GetValidationRequestErrors<DeviceBrandDtoValidation, DeviceBrandDto>(deviceBrand);
+
+            if (errors.Any())
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, GetUnprocessableEntityResponse(HttpContext, errors));
+            }
+
             var result = await _deviceService.UpdateBrandAsync(id, deviceBrand.Brand);
 
             if (result == null)
@@ -103,5 +134,21 @@ namespace DeviceAPI.Controllers
         }
 
         private string NotFoundMessage(Guid id) => $"Device id: {id} not found";
+
+        private Dictionary<string, string[]> GetValidationRequestErrors<T, D>(D request) where T : IValidator<D>
+        {
+            var validator = Activator.CreateInstance<T>();
+            return validator.Validate(request)
+                .Errors
+                .GroupBy(x => x.PropertyName)
+                .ToDictionary(x => x.Key, x => x.Select(y => y.ErrorMessage ).ToArray());
+        }
+
+        private UnprocessableEntityResponseDto GetUnprocessableEntityResponse(HttpContext context, Dictionary<string, string[]> errors)
+        {
+            return new UnprocessableEntityResponseDto(
+            errors,
+            context.TraceIdentifier);
+        }
     } 
 }

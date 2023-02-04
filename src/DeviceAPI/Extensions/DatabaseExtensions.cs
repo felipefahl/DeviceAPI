@@ -14,9 +14,6 @@ public static class DatabaseExtensions
                 {
                     sqlServerOptions.MigrationsAssembly("DeviceAPI.Infrastracture");
                 }));
-
-        //services.AddDbContext<DeviceDatabaseContext>(options => options
-        //    .UseInMemoryDatabase(databaseName: "DevocesDb"));
     }
 
     public static void UpdateDatabase(this IApplicationBuilder app, IWebHostEnvironment env)

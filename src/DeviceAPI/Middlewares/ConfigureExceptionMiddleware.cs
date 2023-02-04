@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using DeviceAPI.Dtos;
 using System.Net;
 using System.Text.Json;
 
@@ -33,9 +33,9 @@ namespace DeviceAPI.Middlewares
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            return context.Response.WriteAsync(JsonSerializer.Serialize(new
+            return context.Response.WriteAsync(JsonSerializer.Serialize(new ErrorResponseDto
             {
-                context.Response.StatusCode,
+                StatusCode = context.Response.StatusCode,
                 Message = "Server Was Unable To Process The Request" + " - " + exception.Message,
                 TraceId = context.TraceIdentifier
             }));
