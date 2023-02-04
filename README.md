@@ -31,7 +31,7 @@ docker-compose up
 
 3. Verify the API is running by sending a request to [http://localhost:32033/api/devices](http://localhost:32033/api/devices)
 ```bash
-curl http://localhost:5000/api/devices
+curl http://localhost:32033/api/devices
 ```
 
 ## Stopping the API
