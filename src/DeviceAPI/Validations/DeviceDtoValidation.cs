@@ -9,7 +9,7 @@ namespace DeviceAPI.Validations
         {
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .Length(3, 60);
+                .Length(2, 60);
 
             RuleFor(x => x.Brand)
                 .NotEmpty()

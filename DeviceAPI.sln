@@ -9,12 +9,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "src\Core\Core.cspro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeviceAPI.Infrastracture", "src\DeviceAPI.Infrastracture\DeviceAPI.Infrastracture.csproj", "{DAFB2EF5-3247-4BAF-B7A2-D4DBA2CF90F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceAPI.Application", "src\DeviceAPI.Application\DeviceAPI.Application.csproj", "{45722F87-D0A7-4807-870E-92C37C671F74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeviceAPI.Application", "src\DeviceAPI.Application\DeviceAPI.Application.csproj", "{45722F87-D0A7-4807-870E-92C37C671F74}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{479899C7-E876-41A8-B790-FA9F9FB41585}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceAPI.UnitTests", "tests\DeviceAPI.UnitTests\DeviceAPI.UnitTests.csproj", "{0BE2594E-53AC-43DA-8069-740D5A101483}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{45722F87-D0A7-4807-870E-92C37C671F74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45722F87-D0A7-4807-870E-92C37C671F74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45722F87-D0A7-4807-870E-92C37C671F74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BE2594E-53AC-43DA-8069-740D5A101483}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BE2594E-53AC-43DA-8069-740D5A101483}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BE2594E-53AC-43DA-8069-740D5A101483}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BE2594E-53AC-43DA-8069-740D5A101483}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
